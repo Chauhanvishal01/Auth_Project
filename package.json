@@ -1,0 +1,18 @@
+{
+  "name": "auth_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "dev":"nodemon backend/server.js",
+    "start":"node backend/server.js"
+  },
+  "author": "Vishal Chauhan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.5.3",
+    "nodemon": "^3.1.4"
+  }
+}
