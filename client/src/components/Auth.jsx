@@ -3,9 +3,11 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../store/slices/userSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const dispatch = useDispatch();
+  const naviaget = useNavigate();
 
   const handleGoogleClick = async () => {
     try {
@@ -29,6 +31,7 @@ const Auth = () => {
       console.log(data);
 
       dispatch(signInSuccess(data));
+      Navigate("/profile");
     } catch (error) {
       console.log("Could not login with google");
     }
@@ -40,7 +43,7 @@ const Auth = () => {
         onClick={handleGoogleClick}
         className="bg-green-600  text-white text-xl rounded-lg p-3 uppercase hover:opacity-85"
       >
-        Cotinue with google
+        Continue with google
       </button>
     </>
   );
