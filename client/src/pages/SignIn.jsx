@@ -6,6 +6,7 @@ import {
   signInRequest,
   signInSuccess,
 } from "../store/slices/userSlice";
+import Auth from "../components/Auth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -69,11 +70,12 @@ const SignIn = () => {
         >
           {loading ? "Loading..." : "Sign In"}
         </button>
+        <Auth />
       </form>
       <div className="flex gap-2 mt-5">
         <p>Dont have an account? </p>
         <span className="text-blue-600">
-          <Link to="/sign-in">Sign Up</Link>
+          <Link to="/sign-up">Sign Up</Link>
         </span>
       </div>
       <p className="text-red-400 mt-5">
