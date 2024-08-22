@@ -8,6 +8,9 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase.js";
 import {
+  deleteUserFailure,
+  deleteUserRequest,
+  deleteUserSuccess,
   updateUserFailure,
   updateUserRequest,
   updateUserSuccess,
@@ -61,16 +64,19 @@ const Profile = () => {
 
     try {
       dispatch(updateUserRequest());
+
       const res = await fetch(
         `/backend/api/v1/user/update/${currentUser?.rest?._id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
+
           body: JSON.stringify(formData),
         }
       );
+      console.log(currentUser);
       const data = await res.json();
       if (data.success === false) {
         dispatch(updateUserFailure(data));
@@ -80,6 +86,26 @@ const Profile = () => {
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error));
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      dispatch(deleteUserRequest());
+      const res = await fetch(
+        `/backend/api/v1/user/delete/${currentUser?.rest?._id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error));
     }
   };
   return (
@@ -140,7 +166,9 @@ const Profile = () => {
         </button>
       </form>
       <div className="flex justify-between mt-5 ">
-        <span className="text-red-500 cursor-pointer">Delete Account</span>
+        <span className="text-red-500 cursor-pointer" onClick={handleDelete}>
+          Delete Account
+        </span>
         <span className="text-red-500 cursor-pointer">Sign Out</span>
       </div>
       <p className="text-red-500 mt-5">{error && "Something went wrong"}</p>
