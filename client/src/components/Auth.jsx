@@ -7,7 +7,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const dispatch = useDispatch();
-  const naviaget = useNavigate();
+  const navigate = useNavigate();
 
   const handleGoogleClick = async () => {
     try {
@@ -29,9 +29,8 @@ const Auth = () => {
 
       const data = await res.json();
       console.log(data);
-
       dispatch(signInSuccess(data));
-      Navigate("/profile");
+      navigate("/");
     } catch (error) {
       console.log("Could not login with google");
     }
